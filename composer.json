@@ -16,7 +16,8 @@
         "psr-4": {"Glory\\Bundle\\PayBundle\\": ""}
     },
     "require": {
-        "symfony/symfony": "~2.3"
+        "symfony/symfony": "~2.3",
+        "omnipay/omnipay": "~2.0"
     },
     "require-dev": {
     }
