@@ -19,33 +19,8 @@ class Order implements OrderInterface
     protected $id;
     protected $body;
     protected $detail;
-    protected $total;
+    protected $amount;
     protected $status;
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getBody()
-    {
-        return $this->body;
-    }
-
-    public function getDetail()
-    {
-        return $this->detail;
-    }
-
-    public function getTotal()
-    {
-        return $this->total;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
-    }
 
     public function setId($id)
     {
@@ -65,9 +40,9 @@ class Order implements OrderInterface
         return $this;
     }
 
-    public function setTotal($total)
+    public function setAmount($amount)
     {
-        $this->total = $total;
+        $this->amount = $amount;
         return $this;
     }
 
@@ -75,6 +50,31 @@ class Order implements OrderInterface
     {
         $this->status = $status;
         return $this;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    public function getDetail()
+    {
+        return $this->detail;
+    }
+
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
 }

@@ -28,9 +28,9 @@ interface OrderInterface
 
     public function setDetail($detail);
 
-    public function getTotal();
+    public function getAmount();
 
-    public function setTotal($total);
+    public function setAmount($amount);
 
     public function getStatus();
 
