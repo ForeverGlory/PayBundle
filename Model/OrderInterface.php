@@ -18,7 +18,7 @@ interface OrderInterface
 
     public function getId();
 
-    public function setId($orderId);
+    public function setId($id);
 
     public function getBody();
 
