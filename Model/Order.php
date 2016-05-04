@@ -21,6 +21,7 @@ class Order implements OrderInterface
     protected $detail;
     protected $amount;
     protected $status;
+    protected $sn;
 
     public function setId($id)
     {
@@ -75,6 +76,17 @@ class Order implements OrderInterface
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function isPaid()
+    {
+        $status = ['paid', 'success'];
+        return in_array($this->getStatus(), $status);
+    }
+
+    public function getSn()
+    {
+        return $this->sn;
     }
 
 }

@@ -35,4 +35,8 @@ interface OrderInterface
     public function getStatus();
 
     public function setStatus($status);
+    
+    public function isPaid();
+    
+    public function getSn();
 }
