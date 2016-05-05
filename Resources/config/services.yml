@@ -2,3 +2,10 @@ services:
     glory_pay.pay_manager:
         class: Glory\Bundle\PayBundle\Model\PayManager
         arguments: [@service_container]
+
+    glory_pay.twig.pay_extension:
+        class: Glory\Bundle\PayBundle\Twig\Extension\PayExtension
+        tags: 
+            - { name: twig.extension }
+        calls:
+            - [ setContainer, [@service_container] ]
