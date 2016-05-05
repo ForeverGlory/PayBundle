@@ -1,3 +1,11 @@
 glory_pay_homepage:
-    path:     /hello/{name}
+    path:   /pay/{id}
     defaults: { _controller: GloryPayBundle:Default:index }
+
+glory_pay_process:
+    path:   /pay/{service}/{id}
+    defaults: { _controller: GloryPayBundle:Order:process }
+
+glory_pay_notify:
+    path:   /pay/{service}/notify
+    defaults: { _controller: GloryPayBundle:Order:notify }
