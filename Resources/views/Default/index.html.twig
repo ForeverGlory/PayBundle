@@ -1,1 +1,30 @@
-Hello {{ name }}!
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% block stylesheets %} {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+            <div>订单编号： {{ order.id }}</div>
+            <div>订单内容： {{ order.body }}</div>
+            <div>订单详情： {{ order.detail }}</div>
+            <div>订单金额： {{ order.amount }}</div>
+            <dl>
+                <dt>微信支付</dt>
+                <dd>
+                    <a href="{{path('glory_pay_process',{service:'wechat',id:order.id})}}" target="_blank">微信支付</a>
+                    <img src="{{path('glory_pay_qrcode',{service:'wechat',id:order.id})}}" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>支付宝</dt>
+                <dd><a href="{{path('glory_pay_process',{service:'alipay',id:order.id})}}" target="_blank">支付宝支付</a></dd>
+            </dl>
+        {% endblock %}
+        {% block javascripts %} {% endblock %}
+    </body>
+</html>
