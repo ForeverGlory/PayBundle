@@ -84,6 +84,12 @@ class Order implements OrderInterface
         return in_array($this->getStatus(), $status);
     }
 
+    public function setSn($sn = null)
+    {
+        $this->sn = $sn? : date('YmdHis') . mt_rand(1000, 9999);
+        return $this;
+    }
+
     public function getSn()
     {
         return $this->sn;
