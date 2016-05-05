@@ -32,34 +32,58 @@ class PayManager
      * 
      * @return OrderInterface
      */
-    public function createOrder($attr)
+    public function createOrder($attr = [])
     {
         $class = $this->getOrderClass();
         $order = new $class();
         $order->setId($attr['id']);
-        $order->setBody($attr['body']);
-        $order->setDetail($attr['detail']);
-        $order->setAmount($attr['amount']);
+        if (!empty($attr['body'])) {
+            $order->setBody($attr['body']);
+        }
+        if (!empty($attr['detail'])) {
+            $order->setDetail($attr['detail']);
+        }
+        if (!empty($attr['amount'])) {
+            $order->setAmount(floatval($attr['amount']));
+        }
+        $order->setSn();
         return $order;
     }
 
     /**
-     * 
      * @return OrderInterface
      */
     public function getOrder($id)
     {
-        $attr = [
-            'id' => $id
-        ];
-        $order = $this->createOrder($attr);
-        $order->setId($id);
-        return $order;
+        $respository = $this->getOrderRespository();
+        return $respository->find($id);
+    }
+
+    /**
+     * @return OrderInterface
+     */
+    public function getOrderBySn($sn)
+    {
+        $respository = $this->getOrderRespository();
+        return $respository->findOneBy(['sn' => $sn]);
+    }
+
+    /**
+     * update Order
+     */
+    public function updateOrder(OrderInterface $order, $isFlush = true)
+    {
+        $em = $this->getDoctrineManager();
+        $em->persist($order);
+        if ($isFlush) {
+            $em->flush();
+        }
     }
 
     public function getPayProviders()
     {
-        $providers = ['wechat' => '', 'alipay' => ''];
+        //todo: test
+        $providers = ['wechat' => 'glory_wechat.pay_provider', 'alipay' => ''];
         return $providers;
     }
 
@@ -76,6 +100,21 @@ class PayManager
     protected function getOrderClass()
     {
         return 'Glory\\Bundle\\PayBundle\\Entity\\Order';
+    }
+
+    protected function getDoctrine()
+    {
+        return $this->container->get('doctrine');
+    }
+
+    protected function getDoctrineManager()
+    {
+        return $this->getDoctrine()->getManager();
+    }
+
+    protected function getOrderRespository()
+    {
+        return $this->getDoctrine()->getRespository($this->getOrderClass());
     }
 
 }
