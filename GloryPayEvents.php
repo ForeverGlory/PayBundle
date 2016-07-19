@@ -15,5 +15,9 @@ namespace Glory\Bundle\PayBundle;
  */
 final class GloryPayEvents
 {
-    
+
+    const PAY_INITIALIZE = 'glory_pay.initialize';
+    const PAY_SUCCESS = 'glory_pay.success';
+    const PAY_FAILURE = 'glory_pay.failure';
+
 }
