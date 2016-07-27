@@ -14,8 +14,10 @@
                 <tr>
                     <th>ID</th>
                     <th>创建时间</th>
+                    <th>细节</th>
                     <th>类型</th>
                     <th>金额</th>
+
                     <th>支付方式</th>
                     <th>支付时间</th>
                     <th>状态</th>
@@ -25,13 +27,14 @@
                     <tr>
                         <td>{{item.id}}</td>
                         <td>{{item.createdTime|default('0')|date('Y-m-d H:i:s')}}</td>
+                        <td>{{item.detail}}</td>
                         <td>{{item.type}}</td>
                         <td>{{item.amount}}</td>
                         <td>{{item.provider}}</td>
                         <td>{{item.paidTime|default('0')|date('Y-m-d H:i:s')}}</td>
                         <td>{{item.status|pay_status}}</td>
                         <td>
-                            <a href="">查看</a>
+
                         </td>
                     </tr>
                 {% endfor %}
