@@ -11,7 +11,7 @@
 
 namespace Glory\Bundle\PayBundle\Payment\Provider;
 
-use Glory\Bundle\PayBundle\Model\OrderInterface;
+use Glory\Bundle\PayBundle\Model\PayInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,19 +21,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 interface ProviderInterface
 {
-    
+
     public function getName();
 
     public function setOption($option);
 
-    public function process(OrderInterface $order);
-    
-    /**
-     * @return OrderInterface
-     */
-    public function getOrder();
+    public function process(PayInterface $pay);
 
-    public function notifyCheck(Request $request);
+    public function notify(Request $request);
 
-    public function notify(OrderInterface $order);
+    public function setPay(PayInterface $pay);
 }

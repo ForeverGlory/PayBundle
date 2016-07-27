@@ -36,7 +36,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('provider')
                         ->useAttributeAsKey('name')
                         ->prototype('array')
-                            ->ignoreExtraKeys()
+                            ->ignoreExtraKeys(false)
                             ->children()
                                 ->scalarNode('type')->cannotBeEmpty()->end()
                                 ->scalarNode('id')->cannotBeEmpty()->end()

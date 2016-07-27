@@ -41,7 +41,7 @@ class GloryPayExtension extends Extension
         $loader->load('services.yml');
 
         $container->getDefinition('glory_pay.pay_manager')
-                ->addMethodCall('setPayClass', [$config['pay_class']]);
+                ->addMethodCall('setClass', [$config['pay_class']]);
 
         foreach ($config['provider'] as $name => $configuration) {
             $this->createPayProvider($container, $name, $configuration);
@@ -55,7 +55,7 @@ class GloryPayExtension extends Extension
         $container->setDefinition($providerName, $definition)
                 ->addMethodCall('setOption', [$configuration]);
         $container->getDefinition('glory_pay.pay_service')
-                ->addMethodCall('addProvider', [new Reference($providerName)]);
+                ->addMethodCall('addProvider', [$name, new Reference($providerName)]);
     }
 
 }

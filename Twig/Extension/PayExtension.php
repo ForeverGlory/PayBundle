@@ -11,10 +11,7 @@
 
 namespace Glory\Bundle\PayBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\Routing\RouterInterface;
 use Twig_Extension;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Twig_SimpleFunction;
 
 /**
@@ -22,10 +19,8 @@ use Twig_SimpleFunction;
  *
  * @author ForeverGlory <foreverglory@qq.com>
  */
-class PayExtension extends Twig_Extension implements ContainerAwareInterface
+class PayExtension extends Twig_Extension
 {
-
-    use ContainerAwareTrait;
 
     /**
      * {@inheritdoc}
@@ -33,28 +28,24 @@ class PayExtension extends Twig_Extension implements ContainerAwareInterface
     public function getFunctions()
     {
         return array(
-            new Twig_SimpleFunction('pay', array($this, 'getPayFunction')),
+            new Twig_SimpleFunction('pay_status', array($this, 'payStatus')),
         );
+    }
+
+    public function getFilters()
+    {
+        return [
+            new \Twig_SimpleFilter('pay_status', [$this, 'payStatus'])
+        ];
     }
 
     /**
      * 
      */
-    public function payFunction($order, $service)
+    public function payStatus($status)
     {
-        return '';
-    }
-
-    /**
-     * Returns the router.
-     *
-     * @return RouterInterface
-     *
-     * @throws \Exception
-     */
-    protected function getRouter()
-    {
-        return $this->container->get('router');
+        $names = ['paid' => '已支付', 'unpaid' => '未支付'];
+        return $names[$status];
     }
 
     /**

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}充值中心{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %} {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <form action="{{path("glory_pay_center")}}" method="post">
+            {{ form_widget(form) }}
+        </form>
+    {% endblock %}
+</body>
+</html>

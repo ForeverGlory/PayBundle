@@ -1,11 +1,17 @@
-glory_pay_homepage:
-    path:   /pay/{id}
-    defaults: { _controller: GloryPayBundle:Default:index }
+glory_pay_center:
+    path:   /pay/center
+    defaults: { _controller: GloryPayBundle:Pay:center }
 
 glory_pay_process:
-    path:   /pay/{service}/{id}
-    defaults: { _controller: GloryPayBundle:Order:process }
+    path:   /pay/{id}
+    defaults: { _controller: GloryPayBundle:Pay:process }
+    requirements:
+        id: \d+
 
 glory_pay_notify:
     path:   /pay/{service}/notify
-    defaults: { _controller: GloryPayBundle:Order:notify }
+    defaults: { _controller: GloryPayBundle:Pay:notify }
+
+glory_pay_admin:
+    path: /admin/pay
+    defaults: { _controller: GloryPayBundle:Admin:index }

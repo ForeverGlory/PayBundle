@@ -12,6 +12,7 @@
 namespace Glory\Bundle\PayBundle\Payment\Provider;
 
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Glory\Bundle\PayBundle\Model\PayInterface;
 
 /**
  * Description of AbstractProvider
@@ -25,13 +26,34 @@ abstract class AbstractProvider implements ProviderInterface
 
     protected $option;
 
+    /**
+     * @var PayInterface 
+     */
+    protected $pay;
+
     public function setOption($option = [])
     {
         $this->option = $option;
         return $this;
     }
 
-    protected function getNotifyUrl()
+    public function notify(Request $request)
+    {
+        throw new Exception('');
+    }
+
+    public function setPay(PayInterface $pay)
+    {
+        $this->pay = $pay;
+        return $this;
+    }
+
+    public function getPay()
+    {
+        return $this->pay;
+    }
+
+    final protected function getNotifyUrl()
     {
         return $this->container->get('router')->generate('glory_pay_notify', ['service' => $this->getName()], true);
     }

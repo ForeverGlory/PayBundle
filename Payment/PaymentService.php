@@ -14,6 +14,10 @@ namespace Glory\Bundle\PayBundle\Payment;
 use Glory\Bundle\PayBundle\Payment\Provider\ProviderInterface;
 use Glory\Bundle\PayBundle\Model\PayInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Glory\Bundle\PayBundle\GloryPayEvents;
+use Glory\Bundle\PayBundle\Event\PayEvent;
+use Glory\DoctrineManager\DoctrineManager;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Description of PaymentService
@@ -24,18 +28,29 @@ class PaymentService
 {
 
     /**
+     * @var DoctrineManager 
+     */
+    protected $doctrineManager;
+
+    /**
+     * @var EventDispatcher 
+     */
+    protected $dispatcher;
+
+    /**
      * @var ProviderInterface[] 
      */
     protected $providers = [];
 
-    public function __construct()
+    public function __construct(DoctrineManager $doctrineManager, EventDispatcher $dispatcher)
     {
-        
+        $this->doctrineManager = $doctrineManager;
+        $this->dispatcher = $dispatcher;
     }
 
-    public function addProvider(ProviderInterface $provider)
+    public function addProvider($name, ProviderInterface $provider)
     {
-        $this->providers[$provider->getName()] = $provider;
+        $this->providers[$name] = $provider;
     }
 
     public function getProvider($name)
@@ -56,8 +71,8 @@ class PaymentService
     public function getProviderNames()
     {
         $names = [];
-        foreach ($this->getProviders() as $provider) {
-            $names[$provider->getName()] = $provider->getName();
+        foreach ($this->getProviders() as $name => $provider) {
+            $names[$name] = $provider->getName();
         }
         return $names;
     }
@@ -75,13 +90,21 @@ class PaymentService
 
     /**
      * 
-     * @param type $provider
      * @param Request $request
-     * @return PayInterface
+     * @param String $providerName
+     * @return response
      */
-    public function notify($provider, Request $request)
+    public function notify(Request $request, $providerName)
     {
-        return $this->getProvider($provider)->notify($request);
+        $provider = $this->getProvider($providerName);
+        $response = $provider->notify($request);
+        $pay = $provider->getPay();
+        $pay->setStatus('paid');
+        $pay->setPaidTime();
+        $this->doctrineManager->update($pay);
+        $event = new PayEvent($pay);
+        $this->dispatcher->dispatch(GloryPayEvents::PAY_SUCCESS, $event);
+        return $response;
     }
 
 }

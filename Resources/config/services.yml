@@ -1,13 +1,13 @@
 services:
     glory_pay.pay_manager:
-        class: Glory\Bundle\PayBundle\Model\PayManager
-        arguments: [@service_container]
+        class: Glory\DoctrineManager\DoctrineManager
+        arguments: ['@doctrine']
+
     glory_pay.pay_service:
         class: Glory\Bundle\PayBundle\Payment\PaymentService
+        arguments: ['@glory_pay.pay_manager','@event_dispatcher']
 
     glory_pay.twig.pay_extension:
         class: Glory\Bundle\PayBundle\Twig\Extension\PayExtension
         tags: 
             - { name: twig.extension }
-        calls:
-            - [ setContainer, [@service_container] ]
