@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Glory\Bundle\PayBundle\GloryPayEvents;
 use Glory\Bundle\PayBundle\Event\PayEvent;
 use Glory\DoctrineManager\DoctrineManager;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Description of PaymentService
@@ -33,7 +33,7 @@ class PaymentService
     protected $doctrineManager;
 
     /**
-     * @var EventDispatcher 
+     * @var EventDispatcherInterface 
      */
     protected $dispatcher;
 
@@ -42,7 +42,7 @@ class PaymentService
      */
     protected $providers = [];
 
-    public function __construct(DoctrineManager $doctrineManager, EventDispatcher $dispatcher)
+    public function __construct(DoctrineManager $doctrineManager, EventDispatcherInterface $dispatcher)
     {
         $this->doctrineManager = $doctrineManager;
         $this->dispatcher = $dispatcher;
