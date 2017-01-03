@@ -13,6 +13,7 @@ namespace Glory\Bundle\PayBundle\Payment\Provider;
 
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Glory\Bundle\PayBundle\Model\PayInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Description of AbstractProvider
